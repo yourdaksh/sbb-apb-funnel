@@ -1,0 +1,1065 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SBB — The Skin Brand Builder</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* ═══ SBB — committed brand world: beige #F3EBDD / green #2D6E30 ═══ */
+:root{
+  --bg:#F3EBDD;
+  --bg-deep:#ECE1CC;
+  --card:#F9F3E7;
+  --ink:#1E2A1C;
+  --soft:#59654F;
+  --faint:#8A9179;
+  --green:#2D6E30;
+  --green-dark:#1F4E22;
+  --night:#173B1A;
+  --line:rgba(45,110,48,.18);
+  --line-strong:rgba(45,110,48,.4);
+  --ease:cubic-bezier(.19,1,.22,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Avenir Next","Avenir","Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size:17px;line-height:1.68;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+/* film grain */
+body::after{
+  content:"";position:fixed;inset:-50%;z-index:90;pointer-events:none;opacity:.045;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='180' height='180' filter='url(%23n)'/></svg>");
+  animation:grain 9s steps(6) infinite;
+}
+@keyframes grain{
+  0%,100%{transform:translate(0,0)}16%{transform:translate(-4%,3%)}33%{transform:translate(3%,-5%)}
+  50%{transform:translate(-5%,-2%)}66%{transform:translate(4%,4%)}83%{transform:translate(-2%,5%)}
+}
+h1,h2,h3,.serif{font-family:"Didot","Bodoni MT","Bodoni 72","Cochin","Playfair Display",Georgia,serif;font-weight:400}
+h1,h2,h3{line-height:1.06;margin:0;text-wrap:balance;letter-spacing:.004em}
+h1{font-size:clamp(2.9rem,7.4vw,6.2rem)}
+h2{font-size:clamp(2.1rem,4.8vw,3.7rem)}
+h3{font-size:clamp(1.2rem,2vw,1.5rem);line-height:1.22}
+em{font-style:italic}
+h1 em,h2 em{color:var(--green)}
+p{margin:0}
+a{color:inherit}
+.wrap{max-width:1240px;margin:0 auto;padding:0 clamp(22px,5vw,60px)}
+section{padding:clamp(80px,12vw,170px) 0;position:relative}
+.eyebrow{
+  font-size:.7rem;letter-spacing:.34em;text-transform:uppercase;font-weight:600;
+  color:var(--green);display:inline-flex;align-items:center;gap:1em;
+}
+.eyebrow::before{content:"";width:38px;height:1px;background:var(--green)}
+.lede{font-size:clamp(1.05rem,1.55vw,1.28rem);color:var(--soft);max-width:36em;line-height:1.75}
+.copy{color:var(--soft);max-width:33em;display:flex;flex-direction:column;gap:1.15em;line-height:1.8}
+.copy strong{color:var(--ink);font-weight:600}
+.copy .pull{
+  font-family:"Didot","Bodoni MT",Georgia,serif;font-style:italic;font-size:1.35em;
+  color:var(--green);line-height:1.4;padding-top:.3em;
+}
+
+/* ═══ nav ═══ */
+nav{
+  position:fixed;inset:0 0 auto 0;z-index:70;display:flex;align-items:center;justify-content:space-between;
+  padding:20px clamp(22px,4vw,52px);transform:translateY(0);
+  transition:transform .5s var(--ease), background .4s, box-shadow .4s, padding .4s;
+}
+nav.scrolled{background:rgba(243,235,221,.86);backdrop-filter:blur(16px) saturate(1.2);-webkit-backdrop-filter:blur(16px) saturate(1.2);box-shadow:0 1px 0 var(--line);padding:13px clamp(22px,4vw,52px)}
+nav.hidden{transform:translateY(-110%)}
+.logo{display:flex;align-items:baseline;gap:.65em;cursor:pointer;text-decoration:none}
+.logo .mark{font-family:"Didot","Bodoni MT",Georgia,serif;font-size:1.55rem;letter-spacing:.06em;color:var(--green)}
+.logo .sub{font-size:.58rem;letter-spacing:.32em;text-transform:uppercase;color:var(--soft)}
+.nav-links{display:flex;align-items:center;gap:clamp(16px,2.6vw,38px);font-size:.85rem}
+.nav-links a{text-decoration:none;color:var(--soft);letter-spacing:.05em;position:relative;transition:color .3s}
+.nav-links a:not(.btn)::after{content:"";position:absolute;left:0;bottom:-5px;width:100%;height:1px;background:var(--green);transform:scaleX(0);transform-origin:right;transition:transform .45s var(--ease)}
+.nav-links a:not(.btn):hover{color:var(--green)}
+.nav-links a:not(.btn):hover::after{transform:scaleX(1);transform-origin:left}
+@media(max-width:720px){.nav-links a.hide-m{display:none}}
+a:focus-visible,button:focus-visible{outline:2px solid var(--green);outline-offset:3px}
+
+/* ═══ buttons ═══ */
+.btn{
+  position:relative;display:inline-flex;align-items:center;gap:.75em;overflow:hidden;isolation:isolate;
+  background:var(--green);color:#F3EBDD;border:1px solid var(--green);
+  padding:1.05em 2.1em;border-radius:999px;text-decoration:none;cursor:pointer;
+  font-size:.9rem;letter-spacing:.06em;font-weight:600;font-family:inherit;
+  transition:color .45s var(--ease), border-color .45s;
+}
+.btn::before{
+  content:"";position:absolute;inset:0;z-index:-1;background:var(--green-dark);
+  transform:translateY(101%);transition:transform .5s var(--ease);border-radius:inherit;
+}
+.btn:hover::before{transform:translateY(0)}
+.btn .arr{transition:transform .4s var(--ease)}
+.btn:hover .arr{transform:translateX(6px)}
+.btn.ghost{background:transparent;color:var(--green)}
+.btn.ghost::before{background:var(--green)}
+.btn.ghost:hover{color:#F3EBDD}
+.btn.on-dark{background:#F3EBDD;color:var(--green-dark);border-color:#F3EBDD}
+.btn.on-dark::before{background:#fff}
+.btn.on-dark:hover{color:var(--green-dark)}
+.btn.ghost.on-night{background:transparent;color:#F3EBDD;border-color:rgba(243,235,221,.45)}
+.btn.ghost.on-night::before{background:#F3EBDD}
+.btn.ghost.on-night:hover{color:var(--green-dark);border-color:#F3EBDD}
+
+/* ═══ reveals ═══ */
+.rv{opacity:0;transform:translateY(34px);filter:blur(6px);
+  transition:opacity 1s var(--ease), transform 1s var(--ease), filter 1s var(--ease)}
+.rv.in{opacity:1;transform:none;filter:none}
+.rv.d1{transition-delay:.1s}.rv.d2{transition-delay:.2s}.rv.d3{transition-delay:.3s}.rv.d4{transition-delay:.4s}
+/* masked line reveal for hero headlines */
+.ln{display:block;overflow:hidden;padding-bottom:.08em;margin-bottom:-.08em}
+.ln>span{display:inline-block;transform:translateY(118%)}
+.view.active .ln>span{animation:lnUp 1.25s var(--ease) both}
+.view.active .ln:nth-child(1)>span{animation-delay:.15s}
+.view.active .ln:nth-child(2)>span{animation-delay:.3s}
+.view.active .ln:nth-child(3)>span{animation-delay:.45s}
+@keyframes lnUp{to{transform:translateY(0)}}
+.view.active .hero-stagger{animation:fadeUp 1.2s var(--ease) both}
+.view.active .hs1{animation-delay:.05s}.view.active .hs2{animation-delay:.55s}
+.view.active .hs3{animation-delay:.75s}.view.active .hs4{animation-delay:.95s}
+@keyframes fadeUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-delay:0s !important;transition-duration:.01ms !important}
+  .rv{opacity:1;transform:none;filter:none}
+  .ln>span{transform:none}
+  html{scroll-behavior:auto}
+  body::after{display:none}
+}
+
+/* ═══ views ═══ */
+.view{display:none}
+.view.active{display:block}
+
+/* ═══ heroes ═══ */
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:130px 0 70px;position:relative;overflow:hidden}
+.sub-hero{min-height:92svh;display:flex;align-items:center;padding:150px 0 80px;position:relative;overflow:hidden}
+.glow{position:absolute;inset:0;pointer-events:none;will-change:transform}
+.glow i{position:absolute;border-radius:50%;display:block}
+.glow .g1{width:58vw;height:58vw;min-width:520px;min-height:520px;right:-16vw;top:-20vw;
+  background:radial-gradient(circle at 42% 42%, rgba(45,110,48,.14), transparent 64%)}
+.glow .g2{width:42vw;height:42vw;min-width:360px;min-height:360px;left:-14vw;bottom:-16vw;
+  background:radial-gradient(circle at 60% 55%, rgba(45,110,48,.1), transparent 62%)}
+.hero .eyebrow,.sub-hero .eyebrow{margin-bottom:28px}
+.hero .lede,.sub-hero .lede{margin-top:30px}
+.sub-hero .btn{margin-top:42px}
+.whisper{margin-top:56px;font-family:"Didot","Bodoni MT",Georgia,serif;font-style:italic;font-size:1.08rem;color:var(--faint)}
+.hero-prompt{
+  margin-top:clamp(48px,6vh,80px);font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;
+  color:var(--faint);display:flex;align-items:center;gap:1.1em;font-weight:600;
+}
+.hero-prompt::after{content:"";flex:0 0 48px;height:1px;background:var(--line-strong)}
+.scroll-hint{
+  position:absolute;bottom:34px;left:50%;transform:translateX(-50%);
+  width:1px;height:52px;background:var(--line-strong);overflow:hidden;
+}
+.scroll-hint::after{content:"";position:absolute;left:0;top:-50%;width:100%;height:50%;background:var(--green);animation:hint 2.2s var(--ease) infinite}
+@keyframes hint{0%{top:-50%}70%,100%{top:110%}}
+
+/* ═══ path cards — inverted hover ═══ */
+.paths{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(16px,2.4vw,26px);margin-top:34px}
+.path-card{
+  position:relative;border:1px solid var(--line-strong);border-radius:24px;overflow:hidden;
+  background:var(--card);padding:clamp(30px,3.6vw,48px);cursor:pointer;text-align:left;
+  font-family:inherit;color:var(--ink);display:flex;flex-direction:column;gap:15px;min-height:320px;isolation:isolate;
+  transition:color .55s var(--ease), border-color .55s, transform .55s var(--ease), box-shadow .55s;
+}
+.path-card::before{
+  content:"";position:absolute;inset:0;z-index:-1;background:var(--green);
+  clip-path:circle(0% at 85% 90%);transition:clip-path .75s var(--ease);
+}
+.path-card:hover{color:#F3EBDD;border-color:var(--green);transform:translateY(-6px);box-shadow:0 30px 60px -28px rgba(31,78,34,.5)}
+.path-card:hover::before{clip-path:circle(160% at 85% 90%)}
+.path-card .num{font-size:.68rem;letter-spacing:.32em;text-transform:uppercase;color:var(--green);font-weight:600;transition:color .5s}
+.path-card:hover .num{color:rgba(243,235,221,.75)}
+.path-card h2{font-size:clamp(1.8rem,2.9vw,2.5rem);line-height:1.08}
+.path-card p{color:var(--soft);max-width:26em;transition:color .5s;line-height:1.7}
+.path-card:hover p{color:rgba(243,235,221,.85)}
+.path-card .go{margin-top:auto;display:inline-flex;align-items:center;gap:.65em;color:var(--green);font-weight:600;font-size:.9rem;letter-spacing:.06em;transition:color .5s}
+.path-card:hover .go{color:#F3EBDD}
+.path-card .go .arr{transition:transform .45s var(--ease)}
+.path-card:hover .go .arr{transform:translateX(7px)}
+
+/* ═══ arch product frames ═══ */
+.arch{
+  position:relative;overflow:hidden;min-height:420px;
+  border-radius:calc(50% / 1.1) calc(50% / 1.1) 26px 26px;
+  border-radius:280px 280px 26px 26px;
+  background:
+    radial-gradient(130% 95% at 78% 8%, rgba(45,110,48,.2), transparent 56%),
+    radial-gradient(110% 85% at 14% 92%, rgba(45,110,48,.12), transparent 55%),
+    linear-gradient(168deg,#F9F3E5 0%,#EFE3CB 100%);
+  border:1px solid var(--line-strong);
+  display:flex;align-items:flex-end;justify-content:center;
+}
+.arch .tag{position:absolute;top:30px;left:0;right:0;text-align:center;font-size:.62rem;letter-spacing:.32em;text-transform:uppercase;color:var(--faint);font-weight:600}
+.arch.on-night{background:
+    radial-gradient(130% 95% at 78% 8%, rgba(169,207,169,.16), transparent 56%),
+    linear-gradient(168deg,rgba(243,235,221,.09),rgba(243,235,221,.03));
+  border-color:rgba(243,235,221,.22)}
+.arch.on-night .tag{color:rgba(243,235,221,.5)}
+
+/* still-life bottles */
+.still{position:relative;display:flex;align-items:flex-end;justify-content:center;gap:28px;padding:60px 24px 54px;will-change:transform}
+.pedestal{position:absolute;bottom:38px;left:50%;transform:translateX(-50%);width:80%;height:18px;border-radius:50%;background:radial-gradient(ellipse, rgba(31,46,28,.22), transparent 68%);filter:blur(5px)}
+.arch.on-night .pedestal{background:radial-gradient(ellipse, rgba(0,0,0,.45), transparent 68%)}
+.bottle{position:relative;flex:0 0 auto;filter:drop-shadow(0 18px 22px rgba(31,46,28,.25))}
+.b-dropper .cap{width:23px;height:42px;margin:0 auto;border-radius:9px 9px 3px 3px;background:linear-gradient(90deg,#173B1A,#3E7D42 45%,#1F4E22)}
+.b-dropper .neck{width:14px;height:8px;margin:0 auto;background:#26301F}
+.b-dropper .glass{width:60px;height:134px;border-radius:13px 13px 19px 19px;background:linear-gradient(105deg,#3A6A3D 0%,#6FA072 26%,#2D6E30 52%,#578A5A 76%,#245427 100%);box-shadow:inset 7px 0 15px rgba(255,255,255,.25), inset -9px 0 17px rgba(0,0,0,.32)}
+.b-jar .lid{width:88px;height:27px;margin:0 auto;border-radius:11px 11px 4px 4px;background:linear-gradient(90deg,#8A6A34,#DCBE78 38%,#A4874A 68%,#C8AB63)}
+.b-jar .body{width:100px;height:78px;margin:0 auto;border-radius:15px 15px 28px 28px;background:linear-gradient(105deg,#EFE4CD,#FDF9EE 34%,#E2D3B4 68%,#F6EDD9);box-shadow:inset 6px 0 13px rgba(255,255,255,.75), inset -9px -7px 17px rgba(120,100,60,.3)}
+.b-pump .nozzle{width:31px;height:12px;margin-left:21px;border-radius:4px 9px 2px 2px;background:#26301F}
+.b-pump .stem{width:10px;height:17px;margin:0 auto;background:#26301F}
+.b-pump .body{width:52px;height:156px;margin:0 auto;border-radius:11px 11px 15px 15px;background:linear-gradient(105deg,#D9CDB2 0%,#F8F1DF 28%,#CBBC99 58%,#EDE3CA 100%);box-shadow:inset 6px 0 13px rgba(255,255,255,.7), inset -9px 0 17px rgba(110,95,60,.32)}
+.bottle .label{position:absolute;left:50%;transform:translateX(-50%);background:rgba(250,247,236,.95);border-radius:3px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;box-shadow:0 1px 2px rgba(31,46,28,.12)}
+.bottle .label::before{content:"";width:17px;height:1.5px;background:#2D6E30}
+.bottle .label::after{content:"";width:24px;height:3px;border-radius:2px;background:rgba(45,110,48,.35)}
+.b-dropper .label{bottom:36px;width:42px;height:48px}
+.b-jar .label{bottom:19px;width:58px;height:36px}
+.b-pump .label{bottom:50px;width:37px;height:54px}
+.float-1{animation:bob 7s ease-in-out infinite}
+.float-2{animation:bob 8.5s ease-in-out infinite .9s}
+.float-3{animation:bob 7.6s ease-in-out infinite 1.7s}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+/* ═══ marquee ═══ */
+.marquee{
+  background:var(--green);color:#F3EBDD;overflow:hidden;padding:22px 0;
+  border-top:1px solid var(--green-dark);border-bottom:1px solid var(--green-dark);
+  transform:rotate(-1.2deg) scale(1.02);margin:0 -10px;
+}
+.marquee .track{display:flex;gap:0;width:max-content;animation:mq 32s linear infinite}
+.marquee span{
+  font-family:"Didot","Bodoni MT",Georgia,serif;font-style:italic;font-size:clamp(1.2rem,2.4vw,1.9rem);
+  white-space:nowrap;padding-right:.4em;
+}
+.marquee span i{font-style:normal;opacity:.5;padding:0 .55em;font-family:"Avenir Next","Helvetica Neue",sans-serif;font-size:.6em;vertical-align:.25em}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* ═══ sections tints ═══ */
+.tint{background:linear-gradient(180deg,var(--bg-deep),var(--bg))}
+.night{background:linear-gradient(168deg,var(--green-dark) 0%,var(--night) 78%);color:#F0EADC}
+.night .eyebrow{color:#A9CFA9}
+.night .eyebrow::before{background:#A9CFA9}
+.night h1 em,.night h2 em{color:#A9CFA9}
+.night .lede,.night .copy{color:rgba(240,234,220,.78)}
+.night .copy strong{color:#F7F2E6}
+.night .copy .pull{color:#A9CFA9}
+.night .whisper{color:rgba(240,234,220,.45)}
+
+/* ═══ editorial index list (deliverables) ═══ */
+.index-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(30px,4vw,54px) clamp(26px,3.5vw,46px);margin-top:clamp(48px,6vw,80px)}
+.ix{position:relative;padding-top:26px}
+.ix::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:var(--line)}
+.ix::after{content:"";position:absolute;top:0;left:0;width:0;height:2px;background:var(--green);transition:width .7s var(--ease)}
+.ix:hover::after{width:100%}
+.ix .n{font-family:"Didot","Bodoni MT",Georgia,serif;font-size:clamp(2rem,3.4vw,2.9rem);color:var(--green);line-height:1;font-style:italic}
+.ix h3{margin-top:14px}
+.ix p{color:var(--soft);font-size:.97rem;margin-top:10px;line-height:1.75;max-width:30em}
+.night .ix::before{background:rgba(243,235,221,.16)}
+.night .ix::after{background:#A9CFA9}
+.night .ix .n{color:#A9CFA9}
+.night .ix p{color:rgba(240,234,220,.72)}
+
+/* ═══ steps ═══ */
+.steps{margin-top:clamp(46px,6vw,76px);border-top:1px solid var(--line)}
+.step{
+  display:grid;grid-template-columns:110px 1fr 1.35fr;gap:clamp(18px,3vw,50px);
+  padding:clamp(26px,3.2vw,40px) clamp(8px,1.5vw,20px);border-bottom:1px solid var(--line);
+  align-items:baseline;position:relative;overflow:hidden;isolation:isolate;
+  transition:padding-left .5s var(--ease);
+}
+.step::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--card);transform:scaleY(0);transform-origin:bottom;transition:transform .5s var(--ease)}
+.step:hover::before{transform:scaleY(1)}
+.step:hover{padding-left:clamp(16px,2.5vw,34px)}
+.step .n{font-family:"Didot","Bodoni MT",Georgia,serif;font-style:italic;font-size:clamp(1.8rem,3.4vw,2.8rem);color:var(--green)}
+.step h3{font-size:clamp(1.15rem,1.8vw,1.45rem)}
+.step p{color:var(--soft);font-size:.97rem;line-height:1.75}
+@media(max-width:720px){.step{grid-template-columns:64px 1fr}.step p{grid-column:2}}
+
+/* ═══ pricing ═══ */
+.price-card{
+  max-width:660px;margin:clamp(46px,6vw,70px) auto 0;background:var(--card);
+  border:1px solid var(--line-strong);border-radius:30px;overflow:hidden;
+  box-shadow:0 40px 90px -40px rgba(31,78,34,.35);text-align:left;
+}
+.price-head{padding:clamp(34px,4.5vw,52px) clamp(30px,4.5vw,52px) 0;text-align:center;position:relative}
+.price-fig{font-family:"Didot","Bodoni MT",Georgia,serif;font-size:clamp(3.6rem,7.5vw,5.4rem);color:var(--green);line-height:1;margin-top:16px}
+.price-note{font-size:.74rem;letter-spacing:.26em;text-transform:uppercase;color:var(--faint);margin-top:12px;font-weight:600}
+.price-body{padding:clamp(28px,3.8vw,44px) clamp(30px,4.5vw,52px) clamp(34px,4.5vw,52px)}
+.price-body ul{list-style:none;margin:0 0 32px;padding:0;display:grid;gap:0}
+.price-body li{display:flex;gap:15px;align-items:baseline;color:var(--soft);font-size:.98rem;padding:11px 0;border-bottom:1px solid var(--line)}
+.price-body li:last-child{border-bottom:none}
+.price-body li::before{content:"";flex:0 0 17px;height:17px;transform:translateY(2px);border-radius:50%;background:var(--green);
+  -webkit-mask:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="black" d="M9.5 16.2 5.3 12l-1.4 1.4 5.6 5.6 12-12-1.4-1.4z"/></svg>') center/contain no-repeat;
+  mask:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="black" d="M9.5 16.2 5.3 12l-1.4 1.4 5.6 5.6 12-12-1.4-1.4z"/></svg>') center/contain no-repeat}
+.price-fine{font-size:.82rem;color:var(--faint);margin-top:20px;text-align:center}
+.price-card .btn{width:100%;justify-content:center}
+.night .price-card{background:rgba(243,235,221,.05);border-color:rgba(243,235,221,.22);box-shadow:0 40px 90px -40px rgba(0,0,0,.6)}
+.night .price-fig{color:#A9CFA9}
+.night .price-note{color:rgba(240,234,220,.5)}
+.night .price-body li{color:rgba(240,234,220,.8);border-color:rgba(243,235,221,.12)}
+.night .price-body li::before{background:#A9CFA9}
+.night .price-fine{color:rgba(240,234,220,.45)}
+
+/* ═══ quote ═══ */
+.quote-block{
+  border-left:2px solid var(--green);padding:12px 0 12px clamp(26px,3.4vw,44px);
+  font-family:"Didot","Bodoni MT",Georgia,serif;font-size:clamp(1.35rem,2.5vw,1.95rem);
+  line-height:1.42;font-style:italic;max-width:24em;color:var(--ink);
+}
+.quote-attr{margin-top:22px;font-family:"Avenir Next","Helvetica Neue",sans-serif;font-style:normal;font-size:.76rem;letter-spacing:.22em;text-transform:uppercase;color:var(--faint);font-weight:600}
+
+/* ═══ before / after ═══ */
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:clamp(18px,2.6vw,30px);margin-top:clamp(42px,5vw,64px)}
+@media(max-width:760px){.ba{grid-template-columns:1fr}}
+.ba .panel{border-radius:24px;border:1px solid var(--line);overflow:hidden;background:var(--card);transition:transform .5s var(--ease), box-shadow .5s}
+.ba .panel:hover{transform:translateY(-5px)}
+.ba .panel .screen{height:230px;display:flex;flex-direction:column;gap:10px;padding:26px;justify-content:center}
+.ba .panel .cap{padding:20px 26px 26px;border-top:1px solid var(--line)}
+.ba .panel .cap .k{font-size:.64rem;letter-spacing:.3em;text-transform:uppercase;color:var(--faint);font-weight:600}
+.ba .panel .cap h3{margin-top:8px;font-size:1.2rem}
+.ba .panel .cap p{color:var(--soft);font-size:.92rem;margin-top:8px;line-height:1.7}
+.skel{border-radius:6px;background:var(--line)}
+.ba .before .screen{filter:grayscale(.7);opacity:.68}
+.ba .after{border-color:var(--line-strong);box-shadow:0 34px 70px -34px rgba(31,78,34,.4)}
+.ba .after .screen{background:linear-gradient(160deg,rgba(45,110,48,.1),transparent 62%)}
+.ba .after .cap .k{color:var(--green)}
+
+/* ═══ audience / testimonial cells ═══ */
+.cellgrid{display:grid;gap:clamp(16px,2.2vw,24px);margin-top:clamp(42px,5vw,64px)}
+.cellgrid.c4{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.cellgrid.c3{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.cell{
+  background:var(--card);border:1px solid var(--line);border-radius:22px;
+  padding:clamp(26px,3vw,38px);display:flex;flex-direction:column;gap:12px;
+  transition:transform .5s var(--ease), box-shadow .5s, border-color .5s;
+}
+.cell:hover{transform:translateY(-5px);border-color:var(--line-strong);box-shadow:0 28px 56px -30px rgba(31,78,34,.35)}
+.cell h3{font-size:1.12rem}
+.cell p{color:var(--soft);font-size:.95rem;line-height:1.75}
+.cell .q{font-family:"Didot","Bodoni MT",Georgia,serif;font-style:italic;font-size:1.15rem;color:var(--ink);line-height:1.55}
+.cell .who{font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);font-weight:600;margin-top:auto;padding-top:10px}
+
+/* ═══ FAQ ═══ */
+.faq-cols{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,4.5vw,70px);margin-top:clamp(42px,5vw,64px)}
+@media(max-width:820px){.faq-cols{grid-template-columns:1fr}}
+.col-k{font-size:.68rem;letter-spacing:.32em;text-transform:uppercase;color:var(--green);font-weight:600;margin-bottom:8px}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{
+  cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:22px;align-items:center;
+  padding:23px 4px;font-weight:600;font-size:1.01rem;transition:color .3s;
+}
+.faq summary:hover{color:var(--green)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-family:"Didot",Georgia,serif;font-size:1.6rem;color:var(--green);transition:transform .4s var(--ease);flex:0 0 auto;line-height:1}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq .a{padding:0 4px 26px;color:var(--soft);max-width:38em;line-height:1.75}
+
+/* ═══ footer ═══ */
+footer{background:var(--night);color:rgba(240,234,220,.72);padding:clamp(70px,9vw,110px) 0 44px;position:relative;overflow:hidden}
+footer::before{content:"";position:absolute;right:-12%;top:-30%;width:56vw;height:56vw;border-radius:50%;background:radial-gradient(circle, rgba(169,207,169,.08), transparent 62%);pointer-events:none}
+.f-head{font-family:"Didot","Bodoni MT",Georgia,serif;font-size:clamp(2rem,4.2vw,3.3rem);color:#F3EBDD;max-width:13em;line-height:1.14}
+.f-head em{color:#A9CFA9}
+.f-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:clamp(30px,5vw,80px);margin-top:clamp(42px,5.5vw,70px)}
+@media(max-width:760px){.f-grid{grid-template-columns:1fr}}
+.f-grid .k{font-size:.64rem;letter-spacing:.32em;text-transform:uppercase;color:rgba(240,234,220,.42);margin-bottom:16px;font-weight:600}
+.f-grid a{display:inline-block;text-decoration:none;color:rgba(240,234,220,.72);padding:5px 0;font-size:.94rem;position:relative;transition:color .3s}
+.f-grid a::after{content:"";position:absolute;left:0;bottom:2px;width:100%;height:1px;background:#A9CFA9;transform:scaleX(0);transform-origin:right;transition:transform .45s var(--ease)}
+.f-grid a:hover{color:#F3EBDD}
+.f-grid a:hover::after{transform:scaleX(1);transform-origin:left}
+.f-grid nav-col{display:block}
+.f-close{margin-top:clamp(48px,6vw,80px);padding-top:28px;border-top:1px solid rgba(240,234,220,.13);display:flex;justify-content:space-between;gap:22px;flex-wrap:wrap;font-size:.84rem;color:rgba(240,234,220,.45)}
+.f-close .serif{font-style:italic;color:rgba(240,234,220,.6)}
+
+/* ═══ cta band ═══ */
+.cta-band{text-align:center}
+.cta-band h2{max-width:15em;margin:0 auto}
+.cta-band .lede{margin:28px auto 0}
+.cta-band .btn{margin-top:44px}
+
+.back-crumb{position:absolute;top:104px;left:0;right:0;z-index:5}
+.back-crumb button{background:none;border:none;cursor:pointer;color:var(--faint);font-family:inherit;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;display:inline-flex;gap:.8em;align-items:center;padding:0;font-weight:600;transition:color .3s,gap .3s}
+.back-crumb button:hover{color:var(--green);gap:1.1em}
+.night-hero .back-crumb button{color:rgba(240,234,220,.5)}
+.night-hero .back-crumb button:hover{color:#A9CFA9}
+
+.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6.5vw,100px);align-items:center}
+@media(max-width:880px){.split{grid-template-columns:1fr}}
+.night-hero{background:linear-gradient(168deg,var(--green-dark) 0%,var(--night) 78%);color:#F0EADC}
+.night-hero .lede{color:rgba(240,234,220,.78)}
+.night-hero .eyebrow{color:#A9CFA9}
+.night-hero .eyebrow::before{background:#A9CFA9}
+.night-hero h1 em{color:#A9CFA9}
+</style>
+
+<nav id="nav" aria-label="Main">
+  <a class="logo" href="#/">
+    <span class="mark">SBB</span>
+    <span class="sub">The Skin Brand Builder</span>
+  </a>
+  <div class="nav-links">
+    <a href="#how" class="hide-m" data-anchor>How It Works</a>
+    <a href="#work" class="hide-m" data-anchor>Our Work</a>
+    <a href="#about" class="hide-m" data-anchor>About</a>
+    <a href="#contact" class="btn" data-anchor style="padding:.72em 1.5em;font-size:.8rem">Start a project <span class="arr">→</span></a>
+  </div>
+</nav>
+
+<!-- ══════════════════ HOME ══════════════════ -->
+<div class="view" id="view-home">
+
+  <header class="hero">
+    <div class="glow" data-parallax="0.12" aria-hidden="true"><i class="g1"></i><i class="g2"></i></div>
+    <div class="wrap">
+      <p class="eyebrow hero-stagger hs1">The Skin Brand Builder</p>
+      <h1>
+        <span class="ln"><span>Your skincare brand</span></span>
+        <span class="ln"><span><em>starts here.</em></span></span>
+      </h1>
+      <p class="lede hero-stagger hs2">Whether you're starting from scratch or ready to take your brand further, we're here to help you build what's next.</p>
+      <p class="hero-prompt hero-stagger hs3">First, tell us where you are</p>
+      <div class="paths hero-stagger hs4">
+        <button class="path-card" data-go="#/foundation">
+          <span class="num">01 · Foundation</span>
+          <h2>I'm starting<br>a brand.</h2>
+          <p>I have an idea and want to turn it into a business — from first product to launch-ready skincare brand.</p>
+          <span class="go">Build my brand <span class="arr">→</span></span>
+        </button>
+        <button class="path-card" data-go="#/growth">
+          <span class="num">02 · Growth</span>
+          <h2>I already have<br>a brand.</h2>
+          <p>I want to improve my store and grow my business — a better shopping experience for the brand I've built.</p>
+          <span class="go">Grow my brand <span class="arr">→</span></span>
+        </button>
+      </div>
+    </div>
+    <span class="scroll-hint" aria-hidden="true"></span>
+  </header>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="track">
+      <span>Product Sourcing<i>✦</i>Packaging Design<i>✦</i>Shopify Storefronts<i>✦</i>Creative Production<i>✦</i>Conversion Design<i>✦</i>Brand Launch<i>✦</i></span>
+      <span>Product Sourcing<i>✦</i>Packaging Design<i>✦</i>Shopify Storefronts<i>✦</i>Creative Production<i>✦</i>Conversion Design<i>✦</i>Brand Launch<i>✦</i></span>
+    </div>
+  </div>
+
+  <section id="about">
+    <div class="wrap split">
+      <div>
+        <p class="eyebrow rv">About SBB</p>
+        <h2 class="rv d1" style="margin-top:22px">We're here to help skincare brands become what they're <em>meant to be.</em></h2>
+        <div class="copy rv d2" style="margin-top:30px">
+          <p>At Skin Brand Builder, we bring together branding, e-commerce design and creative production to help skincare entrepreneurs build and grow their businesses.</p>
+          <p>From the first product idea to an established online store, our focus is on creating the foundations and experiences that help brands move forward.</p>
+          <p class="pull">Whether you're starting from scratch or improving an existing business, we're here to help you take the next step.</p>
+        </div>
+      </div>
+      <div class="arch rv d2">
+        <span class="tag">SBB · For Founders</span>
+        <div class="still" data-parallax="0.06">
+          <div class="pedestal"></div>
+          <div class="bottle b-pump float-1"><div class="nozzle"></div><div class="stem"></div><div class="body"></div><div class="label"></div></div>
+          <div class="bottle b-dropper float-2"><div class="cap"></div><div class="neck"></div><div class="glass"></div><div class="label"></div></div>
+          <div class="bottle b-jar float-3"><div class="lid"></div><div class="body"></div><div class="label"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="night cta-band">
+    <div class="wrap">
+      <p class="eyebrow rv" style="justify-content:center">The SBB promise</p>
+      <h2 class="rv d1" style="margin-top:22px">Build your brand. <em>Grow your business.</em></h2>
+      <p class="lede rv d2" style="margin-left:auto;margin-right:auto">From your first skincare idea to your next stage of growth, we're here to help you build what's next.</p>
+      <div class="rv d3" style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:44px">
+        <a class="btn on-dark" href="#/foundation">Start a brand <span class="arr">→</span></a>
+        <a class="btn ghost on-night" href="#/growth">Grow a brand <span class="arr">→</span></a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ══════════════════ FOUNDATION ══════════════════ -->
+<div class="view" id="view-foundation">
+
+  <header class="sub-hero">
+    <div class="glow" data-parallax="0.12" aria-hidden="true"><i class="g1"></i><i class="g2"></i></div>
+    <div class="wrap back-crumb"><button data-go="#/">← All paths</button></div>
+    <div class="wrap split">
+      <div>
+        <p class="eyebrow hero-stagger hs1">Foundation Program</p>
+        <h1 style="font-size:clamp(2.5rem,5.4vw,4.5rem)">
+          <span class="ln"><span>Your skincare brand.</span></span>
+          <span class="ln"><span>From idea to <em>reality.</em></span></span>
+        </h1>
+        <p class="lede hero-stagger hs2">Everything you need to build the foundation of your own skincare brand, from finding your products to launching your online store.</p>
+        <a class="btn hero-stagger hs3" href="#contact" data-anchor>Start building your brand <span class="arr">→</span></a>
+        <p class="whisper hero-stagger hs4">Your idea deserves to become something real.</p>
+      </div>
+      <div class="arch hero-stagger hs2" style="min-height:440px">
+        <span class="tag">Your Future Collection</span>
+        <div class="still" data-parallax="0.06">
+          <div class="pedestal"></div>
+          <div class="bottle b-dropper float-1"><div class="cap"></div><div class="neck"></div><div class="glass"></div><div class="label"></div></div>
+          <div class="bottle b-jar float-2"><div class="lid"></div><div class="body"></div><div class="label"></div></div>
+          <div class="bottle b-pump float-3"><div class="nozzle"></div><div class="stem"></div><div class="body"></div><div class="label"></div></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="tint">
+    <div class="wrap split" style="align-items:start">
+      <div>
+        <p class="eyebrow rv">The starting point</p>
+        <h2 class="rv d1" style="margin-top:22px">You have the idea. But where do you <em>begin?</em></h2>
+      </div>
+      <div class="copy rv d2">
+        <p>You've always wanted to start your own skincare brand.</p>
+        <p>You've imagined the products, the packaging, the customers and the business you could build.</p>
+        <p>But turning that idea into an actual brand is a completely different story.</p>
+        <p><strong>Finding the right suppliers. Choosing your products. Designing your packaging. Building a website. Setting up your store.</strong></p>
+        <p>Suddenly, there's a lot more to launching a brand than you expected. And figuring it all out on your own can feel overwhelming.</p>
+        <p class="pull">You don't need to do everything alone.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="night">
+    <div class="wrap" style="max-width:920px;text-align:center">
+      <p class="eyebrow rv" style="justify-content:center">The solution</p>
+      <h2 class="rv d1" style="margin-top:22px">What if you could build your brand without figuring everything out <em>yourself?</em></h2>
+      <div class="copy rv d2" style="margin:34px auto 0;text-align:center;align-items:center;max-width:38em">
+        <p><strong>Introducing the SBB Foundation Program.</strong> A complete brand-building service designed to help you turn your skincare idea into a real business.</p>
+        <p>We bring together the essential pieces of your brand: product sourcing, packaging, label design, website creation, store setup and launch assets. Instead of trying to coordinate everything yourself, you have a team helping you bring it all together.</p>
+        <p>From your first product idea to your finished online store, we'll help you build the foundation for your brand.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow rv">What you get</p>
+      <h2 class="rv d1" style="margin-top:22px;max-width:14em">Everything your brand needs to get started.</h2>
+      <p class="lede rv d2" style="margin-top:20px">One program. All the essential building blocks to bring your skincare brand to life.</p>
+      <div class="index-grid">
+        <div class="ix rv"><p class="n">No.1</p><h3>Product sourcing</h3><p>Find the products you want to bring to market with access to our pre-vetted private-label suppliers.</p></div>
+        <div class="ix rv d1"><p class="n">No.2</p><h3>Packaging design</h3><p>Give your products a professional look with packaging designed around your brand.</p></div>
+        <div class="ix rv d2"><p class="n">No.3</p><h3>Label design</h3><p>Get professionally designed labels that bring your product packaging and brand identity together.</p></div>
+        <div class="ix rv"><p class="n">No.4</p><h3>Shopify website</h3><p>Get a professionally designed online store that showcases your products and gives your brand a home online.</p></div>
+        <div class="ix rv d1"><p class="n">No.5</p><h3>Store setup</h3><p>Get your Shopify store configured and prepared for your brand's launch.</p></div>
+        <div class="ix rv d2"><p class="n">No.6</p><h3>Brand launch assets</h3><p>Give your launch a polished look with essential creative assets for presenting your new brand.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tint" id="how-foundation">
+    <div class="wrap">
+      <p class="eyebrow rv">How it works</p>
+      <h2 class="rv d1" style="margin-top:22px;max-width:14em">Six steps between your idea and your brand.</h2>
+      <p class="lede rv d2" style="margin-top:20px">We've made the process easier to understand, so you can focus on building your business while we help bring the pieces together.</p>
+      <div class="steps">
+        <div class="step rv"><span class="n">01</span><h3>Tell us about your vision</h3><p>Share your brand idea, the products you want to sell and the kind of business you want to build.</p></div>
+        <div class="step rv"><span class="n">02</span><h3>Find your products</h3><p>Explore suitable private-label suppliers and choose the products that fit your vision.</p></div>
+        <div class="step rv"><span class="n">03</span><h3>Create your brand</h3><p>Develop your packaging and labels to give your products a cohesive, professional identity.</p></div>
+        <div class="step rv"><span class="n">04</span><h3>Build your online store</h3><p>Turn your brand into a polished Shopify storefront where customers can explore your products.</p></div>
+        <div class="step rv"><span class="n">05</span><h3>Prepare your launch</h3><p>Get your store and agreed brand assets ready for the next stage.</p></div>
+        <div class="step rv"><span class="n">06</span><h3>Launch your brand</h3><p>Take the next step toward introducing your products to the world.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap split">
+      <div class="arch rv" style="min-height:440px">
+        <span class="tag">One Cohesive Brand</span>
+        <div class="still" data-parallax="0.06">
+          <div class="pedestal"></div>
+          <div class="bottle b-jar float-1"><div class="lid"></div><div class="body"></div><div class="label"></div></div>
+          <div class="bottle b-pump float-2"><div class="nozzle"></div><div class="stem"></div><div class="body"></div><div class="label"></div></div>
+          <div class="bottle b-dropper float-3"><div class="cap"></div><div class="neck"></div><div class="glass"></div><div class="label"></div></div>
+        </div>
+      </div>
+      <div>
+        <p class="eyebrow rv">The finished result</p>
+        <h2 class="rv d1" style="margin-top:22px">Imagine what your brand could <em>look like.</em></h2>
+        <div class="copy rv d2" style="margin-top:30px">
+          <p>From the first product concept to the final website, every detail contributes to how customers experience your brand.</p>
+          <p>Imagine your own products, your own packaging and your own online store, all coming together as one cohesive brand.</p>
+          <p class="pull">That's what we're here to help you build.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tint">
+    <div class="wrap">
+      <p class="eyebrow rv">Who it's for</p>
+      <h2 class="rv d1" style="margin-top:22px;max-width:15em">Built for people ready to create something of their own.</h2>
+      <p class="lede rv d2" style="margin-top:20px">Whether you're an esthetician ready to introduce your own products, a beauty enthusiast with a business idea or an aspiring entrepreneur looking for your next opportunity, the Foundation Program is designed to help you get started.</p>
+      <div class="cellgrid c4">
+        <div class="cell rv"><h3>For estheticians</h3><p>Turn your skincare knowledge and experience into your own product line.</p></div>
+        <div class="cell rv d1"><h3>For aspiring entrepreneurs</h3><p>Start building a business in an industry you're passionate about.</p></div>
+        <div class="cell rv d2"><h3>For beauty enthusiasts</h3><p>Take your interest in skincare beyond the products you love.</p></div>
+        <div class="cell rv d3"><h3>For first-time founders</h3><p>Get help with the essential building blocks instead of navigating the entire process alone.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="work-foundation">
+    <div class="wrap split" style="align-items:start">
+      <div>
+        <p class="eyebrow rv">Case study</p>
+        <h2 class="rv d1" style="margin-top:22px">From an idea to a skincare <em>brand.</em></h2>
+        <div class="copy rv d2" style="margin-top:30px">
+          <p><strong>Meet [Founder Name].</strong></p>
+          <p>Like many aspiring founders, [Founder Name] wanted to launch a skincare brand but needed help bringing all the pieces together.</p>
+          <p>With SBB, [Founder Name] worked on [specific deliverables completed].</p>
+          <p>The result? A brand with its own products, packaging and online store.</p>
+        </div>
+        <a class="btn ghost rv d3" href="#contact" data-anchor style="margin-top:36px">Explore the complete journey <span class="arr">→</span></a>
+      </div>
+      <div class="rv d2">
+        <div class="quote-block">"I had the vision for years. SBB helped me turn it into products I can hold, a brand I'm proud of, and a store that's actually mine."
+          <p class="quote-attr">[Client name] · Founder, [Brand] — placeholder</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tint">
+    <div class="wrap" style="text-align:center">
+      <p class="eyebrow rv" style="justify-content:center">The Foundation Program</p>
+      <h2 class="rv d1" style="margin-top:22px">Your brand starts with a <em>foundation.</em></h2>
+      <p class="lede rv d2" style="margin:20px auto 0">Everything you need to get the essential pieces of your skincare brand in place.</p>
+      <div class="price-card rv d2">
+        <div class="price-head">
+          <p class="price-fig">$1,200</p>
+          <p class="price-note">One-time program fee</p>
+        </div>
+        <div class="price-body">
+          <ul>
+            <li>Access to pre-vetted private-label suppliers</li>
+            <li>Product sourcing support</li>
+            <li>Packaging design</li>
+            <li>Label design</li>
+            <li>Shopify website creation</li>
+            <li>Store setup</li>
+            <li>Brand launch assets</li>
+          </ul>
+          <a class="btn" href="#contact" data-anchor>Start your skincare brand <span class="arr">→</span></a>
+          <p class="price-fine">Manufacturing, inventory and ongoing marketing are separate.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="night cta-band">
+    <div class="wrap">
+      <h2 class="rv">Every great brand starts somewhere. <em>This could be your beginning.</em></h2>
+      <p class="lede rv d1" style="margin-left:auto;margin-right:auto">You don't need to have everything figured out today. You just need a vision and a clear next step. Let's turn your skincare idea into a brand you can call your own.</p>
+      <a class="btn on-dark rv d2" href="#contact" data-anchor>Start building your brand <span class="arr">→</span></a>
+    </div>
+  </section>
+
+</div>
+
+<!-- ══════════════════ GROWTH ══════════════════ -->
+<div class="view" id="view-growth">
+
+  <header class="sub-hero night-hero">
+    <div class="wrap back-crumb"><button data-go="#/">← All paths</button></div>
+    <div class="wrap split">
+      <div>
+        <p class="eyebrow hero-stagger hs1">Growth Program</p>
+        <h1 style="font-size:clamp(2.5rem,5.4vw,4.5rem)">
+          <span class="ln"><span>You've built your brand.</span></span>
+          <span class="ln"><span>Now let's take it <em>further.</em></span></span>
+        </h1>
+        <p class="lede hero-stagger hs2">A better storefront. Better product experiences. Better creative. Everything your brand needs for its next stage.</p>
+        <a class="btn on-dark hero-stagger hs3" href="#contact" data-anchor>Let's grow your brand <span class="arr">→</span></a>
+      </div>
+      <div class="arch on-night hero-stagger hs2" style="min-height:440px">
+        <span class="tag">Your Next-Stage Storefront</span>
+        <div class="still" data-parallax="0.06">
+          <div class="pedestal"></div>
+          <div class="bottle b-pump float-1"><div class="nozzle"></div><div class="stem"></div><div class="body"></div><div class="label"></div></div>
+          <div class="bottle b-jar float-2"><div class="lid"></div><div class="body"></div><div class="label"></div></div>
+          <div class="bottle b-dropper float-3"><div class="cap"></div><div class="neck"></div><div class="glass"></div><div class="label"></div></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <div class="wrap split" style="align-items:start">
+      <div>
+        <p class="eyebrow rv">The honest question</p>
+        <h2 class="rv d1" style="margin-top:22px">Your products have potential. Does your store <em>show it?</em></h2>
+      </div>
+      <div class="copy rv d2">
+        <p>You've already done the hard work of building your skincare brand. You've developed your products, invested in your business and brought your vision to life.</p>
+        <p><strong>But maybe your website hasn't kept up.</strong></p>
+        <p>Your product pages look like every other store. Your photos don't capture the quality of your products. Your customers have to work too hard to understand what makes your brand different.</p>
+        <p>And when your online store doesn't communicate your value, it can make it harder for customers to feel confident buying from you.</p>
+        <p class="pull">It's time for your online experience to catch up with your ambition.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="tint">
+    <div class="wrap" style="max-width:920px;text-align:center">
+      <p class="eyebrow rv" style="justify-content:center">Introducing SBB Growth</p>
+      <h2 class="rv d1" style="margin-top:22px">We help skincare brands look better, sell smarter and <em>grow.</em></h2>
+      <div class="copy rv d2" style="margin:34px auto 0;text-align:center;align-items:center;max-width:38em">
+        <p>At SBB, we help skincare brands improve the way they present and sell their products online.</p>
+        <p>From Shopify redesigns and conversion-focused product pages to professional product photography and creative production, we bring together the elements that shape your customers' shopping experience.</p>
+        <p>Whether you need a complete store revamp or support improving specific parts of your brand, we'll help you identify what comes next.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="night">
+    <div class="wrap" style="text-align:center">
+      <p class="eyebrow rv" style="justify-content:center">The hero offer</p>
+      <h2 class="rv d1" style="margin-top:22px">Shopify Revamp <em>+ CRO</em></h2>
+      <p class="lede rv d2" style="margin:20px auto 0">Give your skincare store the design and shopping experience it deserves.</p>
+      <div class="price-card rv d2">
+        <div class="price-head">
+          <p class="price-fig">$899</p>
+          <p class="price-note">Introductory offer</p>
+        </div>
+        <div class="price-body">
+          <ul>
+            <li>Shopify storefront redesign</li>
+            <li>Conversion-focused product pages</li>
+            <li>Mobile shopping experience</li>
+            <li>Strategic store improvements</li>
+            <li>Relevant CRO features and enhancements</li>
+          </ul>
+          <a class="btn on-dark" href="#contact" data-anchor style="width:100%;justify-content:center">Revamp my Shopify store <span class="arr">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow rv">What we improve</p>
+      <h2 class="rv d1" style="margin-top:22px;max-width:14em">Every part of your store should work together.</h2>
+      <p class="lede rv d2" style="margin-top:20px">A great shopping experience isn't just about how your website looks. It's about helping customers discover your products, understand their benefits and feel confident making a purchase.</p>
+      <div class="index-grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
+        <div class="ix rv"><p class="n">No.1</p><h3>A homepage that tells your story</h3><p>Give visitors a clear understanding of your brand, your products and what makes you different.</p></div>
+        <div class="ix rv d1"><p class="n">No.2</p><h3>Product pages that do the talking</h3><p>Present product benefits, ingredients, usage instructions and purchasing options in a clear, engaging way.</p></div>
+        <div class="ix rv"><p class="n">No.3</p><h3>A smoother mobile experience</h3><p>Make your store easy to browse and shop on the devices your customers use every day.</p></div>
+        <div class="ix rv d1"><p class="n">No.4</p><h3>A more professional presentation</h3><p>Make your products stand out with better visual consistency and thoughtful design.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tint">
+    <div class="wrap split">
+      <div>
+        <p class="eyebrow rv">Creative production</p>
+        <h2 class="rv d1" style="margin-top:22px">Stop making your products look <em>ordinary.</em></h2>
+        <div class="copy rv d2" style="margin-top:30px">
+          <p>Your product photography is often the first thing a potential customer notices. But generic product photos and inconsistent visuals can make even a great product look unremarkable.</p>
+          <p>We create premium, AI-powered product imagery and creative assets that help skincare brands present their products in a more polished and distinctive way.</p>
+          <p>From studio-style product photography to lifestyle campaigns and social media creatives, give your products the visual attention they deserve.</p>
+        </div>
+        <a class="btn ghost rv d3" href="#contact" data-anchor style="margin-top:36px">Explore creative production <span class="arr">→</span></a>
+      </div>
+      <div class="arch rv d2" style="min-height:420px">
+        <span class="tag">Studio-Grade Creative</span>
+        <div class="still" data-parallax="0.06">
+          <div class="pedestal"></div>
+          <div class="bottle b-dropper float-2"><div class="cap"></div><div class="neck"></div><div class="glass"></div><div class="label"></div></div>
+          <div class="bottle b-jar float-1"><div class="lid"></div><div class="body"></div><div class="label"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow rv">The transformation</p>
+      <h2 class="rv d1" style="margin-top:22px;max-width:16em">From an ordinary store to a premium brand experience.</h2>
+      <p class="lede rv d2" style="margin-top:20px">A more thoughtful shopping experience can change how customers perceive your brand. Imagine your homepage communicating your identity, your product pages clearly presenting your products and your visuals bringing everything together.</p>
+      <div class="ba">
+        <div class="panel before rv">
+          <div class="screen">
+            <div class="skel" style="width:44%;height:14px"></div>
+            <div class="skel" style="width:88%;height:9px"></div>
+            <div class="skel" style="width:74%;height:9px"></div>
+            <div style="display:flex;gap:10px;margin-top:8px">
+              <div class="skel" style="flex:1;height:76px"></div>
+              <div class="skel" style="flex:1;height:76px"></div>
+              <div class="skel" style="flex:1;height:76px"></div>
+            </div>
+          </div>
+          <div class="cap"><span class="k">Before</span><h3>A basic shopping experience</h3><p>Generic layouts, inconsistent visuals and unclear product presentation.</p></div>
+        </div>
+        <div class="panel after rv d1">
+          <div class="screen">
+            <div class="skel" style="width:52%;height:16px;background:var(--green);opacity:.85"></div>
+            <div class="skel" style="width:80%;height:9px;background:var(--line-strong)"></div>
+            <div style="display:flex;gap:10px;margin-top:8px;align-items:flex-end">
+              <div class="skel" style="flex:1.4;height:94px;background:linear-gradient(150deg,rgba(45,110,48,.4),rgba(45,110,48,.12))"></div>
+              <div class="skel" style="flex:1;height:76px;background:var(--line-strong)"></div>
+              <div class="skel" style="flex:1;height:62px;background:var(--line)"></div>
+            </div>
+            <div class="skel" style="width:36%;height:28px;border-radius:999px;background:var(--green);opacity:.92;margin-top:6px"></div>
+          </div>
+          <div class="cap"><span class="k">After</span><h3>A cohesive brand experience</h3><p>Thoughtful design, clear product information and polished creative.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tint" id="how-growth">
+    <div class="wrap">
+      <p class="eyebrow rv">The process</p>
+      <h2 class="rv d1" style="margin-top:22px;max-width:14em">A clear process to improve your store.</h2>
+      <div class="steps">
+        <div class="step rv"><span class="n">01</span><h3>Understand your brand</h3><p>We review your current store, products and goals.</p></div>
+        <div class="step rv"><span class="n">02</span><h3>Identify opportunities</h3><p>We determine which parts of the shopping experience need attention.</p></div>
+        <div class="step rv"><span class="n">03</span><h3>Redesign your store</h3><p>We improve the visual design and customer journey.</p></div>
+        <div class="step rv"><span class="n">04</span><h3>Implement CRO features</h3><p>We add relevant improvements to support the shopping experience.</p></div>
+        <div class="step rv"><span class="n">05</span><h3>Review and refine</h3><p>We check the finished store and make agreed adjustments.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="work-growth">
+    <div class="wrap split" style="align-items:start">
+      <div>
+        <p class="eyebrow rv">Case studies</p>
+        <h2 class="rv d1" style="margin-top:22px">Real brands. Real <em>transformations.</em></h2>
+        <div class="copy rv d2" style="margin-top:30px">
+          <p>Every skincare brand has a different story. Some need a complete website overhaul. Others need better product pages, stronger creative or a more consistent brand experience.</p>
+          <p>Explore how we've helped brands improve their online presence and bring their vision to life.</p>
+        </div>
+        <a class="btn ghost rv d3" href="#contact" data-anchor style="margin-top:36px">Explore our work <span class="arr">→</span></a>
+      </div>
+      <div class="rv d2">
+        <div class="quote-block">"Our products were always good — our store just didn't show it. After the revamp, customers finally see the brand we always were."
+          <p class="quote-attr">[Client name] · Founder, [Brand] — placeholder</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tint">
+    <div class="wrap">
+      <p class="eyebrow rv">Beyond the revamp</p>
+      <h2 class="rv d1" style="margin-top:22px;max-width:14em">Need more than a website revamp?</h2>
+      <p class="lede rv d2" style="margin-top:20px">As your brand evolves, your needs will too. Beyond Shopify design and CRO, SBB can help with additional creative and marketing services tailored to your goals.</p>
+      <div class="cellgrid c3">
+        <div class="cell rv"><h3>Product photography</h3><p>Professional-looking product visuals for your website and campaigns.</p></div>
+        <div class="cell rv d1"><h3>Creative production</h3><p>Campaign visuals, social media content and AI-powered UGC-style creative.</p></div>
+        <div class="cell rv d2"><h3>Marketing support</h3><p>Discuss paid advertising and ongoing growth support based on your brand's needs.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="night cta-band">
+    <div class="wrap">
+      <h2 class="rv">Your next stage starts with a <em>better experience.</em></h2>
+      <p class="lede rv d1" style="margin-left:auto;margin-right:auto">You've already built something worth investing in. Let's make sure your online store reflects the quality of your products and the ambition behind your brand.</p>
+      <a class="btn on-dark rv d2" href="#contact" data-anchor>Let's grow your brand <span class="arr">→</span></a>
+    </div>
+  </section>
+
+</div>
+
+<!-- ══════════════════ SHARED TAIL ══════════════════ -->
+<div id="shared-tail">
+
+  <section id="work" style="padding-top:clamp(80px,11vw,150px)">
+    <div class="wrap" style="text-align:center;max-width:960px">
+      <p class="eyebrow rv" style="justify-content:center">Testimonials</p>
+      <h2 class="rv d1" style="margin-top:22px">Don't just take our word <em>for it.</em></h2>
+      <p class="lede rv d2" style="margin:20px auto 0">Real founders. Real stories about where they started, what we built together, and what the process felt like.</p>
+      <div class="cellgrid c3" style="text-align:left">
+        <div class="cell rv"><p class="q">"[What the client's situation was before working with SBB.]"</p><p class="who">[Client · Brand]</p></div>
+        <div class="cell rv d1"><p class="q">"[What SBB helped them accomplish.]"</p><p class="who">[Client · Brand]</p></div>
+        <div class="cell rv d2"><p class="q">"[What they valued about the process.]"</p><p class="who">[Client · Brand]</p></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="track">
+      <span>Build Your Brand<i>✦</i>Grow Your Business<i>✦</i>Build Your Brand<i>✦</i>Grow Your Business<i>✦</i>Build Your Brand<i>✦</i>Grow Your Business<i>✦</i></span>
+      <span>Build Your Brand<i>✦</i>Grow Your Business<i>✦</i>Build Your Brand<i>✦</i>Grow Your Business<i>✦</i>Build Your Brand<i>✦</i>Grow Your Business<i>✦</i></span>
+    </div>
+  </div>
+
+  <section class="tint" id="how">
+    <div class="wrap">
+      <div style="text-align:center">
+        <p class="eyebrow rv" style="justify-content:center">Frequently asked questions</p>
+        <h2 class="rv d1" style="margin-top:22px">Everything you're <em>wondering.</em></h2>
+      </div>
+      <div class="faq-cols">
+        <div>
+          <p class="col-k rv">Foundation</p>
+          <div class="faq rv d1">
+            <details><summary>What exactly is included in the $1,200 program?</summary><p class="a">Product sourcing with access to pre-vetted private-label suppliers, packaging design, label design, a Shopify website, full store setup and your brand launch assets — everything listed in the program above.</p></details>
+            <details><summary>Do I need to have a brand name already?</summary><p class="a">No. Many founders come to us with only an idea. We'll help you shape your vision into a cohesive brand identity as part of the process.</p></details>
+            <details><summary>Can I choose the products I want to sell?</summary><p class="a">Yes. You explore our pre-vetted supplier network and choose the products that fit your vision — the brand is yours from day one.</p></details>
+            <details><summary>Does the price include manufacturing?</summary><p class="a">No. Manufacturing, inventory and ongoing marketing are separate. The program covers the brand foundation: sourcing, design, and your online store.</p></details>
+            <details><summary>How long does the process take?</summary><p class="a">Timelines vary by project and supplier lead times — we'll map out a realistic schedule together on your first call.</p></details>
+            <details><summary>Do you help with marketing after launch?</summary><p class="a">Ongoing marketing isn't part of the Foundation Program, but we offer creative and growth services you can add when you're ready.</p></details>
+          </div>
+        </div>
+        <div>
+          <p class="col-k rv">Growth</p>
+          <div class="faq rv d1">
+            <details><summary>What is included in the Shopify Revamp + CRO offer?</summary><p class="a">A storefront redesign, conversion-focused product pages, an improved mobile shopping experience, strategic store improvements and relevant CRO features.</p></details>
+            <details><summary>Can you work with my existing Shopify theme?</summary><p class="a">In most cases, yes. We'll review your current setup and recommend whether to build on your theme or start from a stronger base.</p></details>
+            <details><summary>Do you create product photos?</summary><p class="a">Yes — premium, AI-powered product imagery, studio-style photography and lifestyle creative are available as part of our creative production services.</p></details>
+            <details><summary>Can you help improve my conversion rate?</summary><p class="a">That's the focus of the CRO side of the offer: clearer product presentation, smoother journeys and purchase-focused improvements across your store.</p></details>
+            <details><summary>Do you offer ongoing services?</summary><p class="a">Yes. Beyond the revamp we offer product photography, creative production and marketing support tailored to your goals.</p></details>
+            <details><summary>How do we get started?</summary><p class="a">Reach out through the contact link below — we'll review your store and come back with what we'd improve first.</p></details>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <div class="wrap">
+      <p class="f-head rv">Your skincare brand journey <em>starts here.</em></p>
+      <a class="btn on-dark rv d1" href="mailto:jasmynaiteam@gmail.com" style="margin-top:34px">Book a call <span class="arr">→</span></a>
+      <div class="f-grid">
+        <div>
+          <p class="k">SBB · The Skin Brand Builder</p>
+          <p style="max-width:26em;font-size:.94rem;line-height:1.75">We bring together branding, e-commerce design and creative production to help skincare entrepreneurs build and grow their businesses.</p>
+        </div>
+        <div>
+          <p class="k">Journeys</p>
+          <a href="#/foundation">Start a Brand</a><br>
+          <a href="#/growth">Grow a Brand</a><br>
+          <a href="#work" data-anchor>Our Work</a>
+        </div>
+        <div>
+          <p class="k">Company</p>
+          <a href="#about" data-anchor>About Us</a><br>
+          <a href="mailto:jasmynaiteam@gmail.com">Contact</a><br>
+          <a href="#" onclick="return false">Privacy Policy</a><br>
+          <a href="#" onclick="return false">Terms &amp; Conditions</a>
+        </div>
+      </div>
+      <div class="f-close">
+        <span>© 2026 Skin Brand Builder</span>
+        <span class="serif">Built for the next generation of skincare brands.</span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  var views = { "": "view-home", "/": "view-home", "/foundation": "view-foundation", "/growth": "view-growth" };
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add("in"); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
+
+  function arm(scope){
+    scope.querySelectorAll(".rv").forEach(function(el){
+      el.classList.remove("in");
+      observer.observe(el);
+    });
+  }
+
+  function route(){
+    var h = location.hash.replace(/^#/, "");
+    var id = views[h];
+    if(!id) return; // in-page anchor, not a route
+    document.querySelectorAll(".view").forEach(function(v){ v.classList.remove("active"); });
+    var v = document.getElementById(id);
+    // force reflow so hero line animations replay
+    void v.offsetWidth;
+    v.classList.add("active");
+    window.scrollTo(0, 0);
+    arm(v);
+  }
+  window.addEventListener("hashchange", route);
+
+  document.querySelectorAll("[data-go]").forEach(function(el){
+    el.addEventListener("click", function(){ location.hash = el.getAttribute("data-go"); });
+  });
+
+  document.querySelectorAll("[data-anchor]").forEach(function(a){
+    a.addEventListener("click", function(ev){
+      ev.preventDefault();
+      var raw = a.getAttribute("href").slice(1);
+      var active = document.querySelector(".view.active");
+      var target = null;
+      if(active){ target = active.querySelector("#" + raw + "-" + active.id.replace("view-","")); }
+      if(!target){ target = document.getElementById(raw); }
+      if(!target && raw === "about"){
+        location.hash = "#/";
+        setTimeout(function(){ var t = document.getElementById("about"); if(t) t.scrollIntoView({behavior:"smooth"}); }, 150);
+        return;
+      }
+      if(target){ target.scrollIntoView({ behavior: "smooth" }); }
+    });
+  });
+
+  // nav: shrink on scroll, hide on scroll down / show on scroll up
+  var nav = document.getElementById("nav");
+  var lastY = 0;
+  window.addEventListener("scroll", function(){
+    var y = window.scrollY;
+    nav.classList.toggle("scrolled", y > 40);
+    nav.classList.toggle("hidden", y > 420 && y > lastY);
+    lastY = y;
+  }, { passive: true });
+
+  // gentle parallax on glows and still-lifes
+  if(!reduced){
+    var px = [];
+    function collect(){ px = Array.prototype.slice.call(document.querySelectorAll("[data-parallax]")); }
+    collect();
+    window.addEventListener("hashchange", collect);
+    var ticking = false;
+    window.addEventListener("scroll", function(){
+      if(ticking) return;
+      ticking = true;
+      requestAnimationFrame(function(){
+        px.forEach(function(el){
+          var r = el.getBoundingClientRect();
+          if(r.bottom < 0 || r.top > window.innerHeight){ ticking = false; return; }
+          var f = parseFloat(el.getAttribute("data-parallax")) || 0.08;
+          var mid = r.top + r.height/2 - window.innerHeight/2;
+          el.style.transform = "translateY(" + (-mid * f).toFixed(1) + "px)";
+        });
+        ticking = false;
+      });
+    }, { passive: true });
+  }
+
+  arm(document.getElementById("shared-tail"));
+  route();
+  if(!document.querySelector(".view.active")){
+    var home = document.getElementById("view-home");
+    home.classList.add("active");
+    arm(home);
+  }
+})();
+</script>
+
+</html>
